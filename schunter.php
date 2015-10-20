@@ -30,8 +30,20 @@ License: GPL2
 
 /**
  * Process schunter depending on how invoked
+ *
+ * short code hunter ( schunter ) is initially designed to be run in a batch mode
+ * as we first want to find out how many shortcodes are being used and where they're being used.
+ * This will help us to determine whether or not it makes sense to register a subset of shortcodes.
+ * Of course, most plugins and themes register all their shortcodes willy-nilly.
+ * Some re-education may be needed.
+ * 
+ * - This code is not yet designed to be run under WP-cli
+ * - This code does not have a WordPress front-end or admin back end
+ * - It runs under oik-wp.php
+ * - When invoked from "oik-wp.php" ( part of oik-batch ) then it will run schunter_run()
+ * - The code is dependent upon oik APIs
+ * - It has not been tested without the oik base plugin being active
  */
-
 function schunter_loaded() {
 
 	if ( PHP_SAPI == "cli" ) {
