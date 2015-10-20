@@ -59,6 +59,9 @@ class Schunter {
 	
 	/**
 	 * Run the Shortcode hunter
+	 *
+	 * There are multiple stages to building the information that maps shortcode usage 
+	 * First and foremost is understanding the usage of shortcodes in posts and postmeta
 	 */
 	function run() {
 		echo "Schunting for shortcodes";
@@ -66,13 +69,13 @@ class Schunter {
 		$this->options->fetch();
 		$this->schunt_posts();
 		
-		// $this->schunt_postmeta();
 		// $this->schunt_
 		$this->end_process();
 	}
 	
 	/**
-	 * 
+	 * 	Search posts and postmeta for possible shortcodes
+	 *
 	 */
 	function schunt_posts() {
 		oik_require( "includes/bw_posts.inc" );
@@ -143,14 +146,36 @@ class Schunter {
 		$this->codes->update();
 	}
 		
-	
+	/**
+	 * Hunt for shortcodes in the post
+	 *
+	 * @TODO - Do we see revisions here? If no, does it matter?
+	 *
+	 */		
 	function schunt_post( $post ) {
 		echo "{$post->ID} {$post->post_type} {$post->post_modified}" . PHP_EOL;
+		if ( $post->post_type == "revision" ) gob();
 		$codes = $this->schunt_codes( $post->post_title );
 		$codes += $this->schunt_codes( $post->post_content );
     $codes += $this->schunt_codes( $post->post_excerpt );
 		$this->codes->add_codes( $codes, $post->ID, "posts" );
 	}	
+	
+	/**
+	 * Hunt for shortcodes in the post meta data
+	 *
+	 * Search every post meta field regardless of its use
+	 */
+	function schunt_postmeta( $post ) {
+		$post_meta = get_post_meta( $post->ID );
+		$codes = array();
+		foreach ( $post_meta as $meta_data ) {
+			foreach ( $meta_data as $index => $value ) {
+				$codes += $this->schunt_codes( $value );
+			}
+		}
+		$this->codes->add_codes( $codes, $post->ID, "postmeta" );
+	}
 	
 	/**
 	 * Hunt for anything that looks like a shortcode

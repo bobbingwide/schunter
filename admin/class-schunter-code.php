@@ -3,9 +3,14 @@
 /**
  * Schunter code
  *
- * Implements a single instance of a shortcode
+ * Implements a single instance of a shortcode and all its references
  *
- * 
+ * Notes: 
+ * - Each shortcode shortcode may or may not be registered. 
+ * - It may not even be a shortcode.
+ * - But if it were to become a shortcode, and then be expanded as a shortcode, then you might get unexpected different results to how it was before the shortcode was registered.
+ * - The total_references figure is a snapshot when the information was built
+ * - Ditto for the _refs prefixed variables.
  */
 class Schunter_code {
 
@@ -78,17 +83,13 @@ class Schunter_code {
 		$this->function = null;
 		$this->status = null;
 		$this->total_references = 0;
-		// Are all tother fields null?
-		//print_r( $this );
+		// Are all the other fields null?
+		// print_r( $this );
 	}
 	
 	function add_ref( $id, $class ) {
-		echo "Adding ref $id $class" . PHP_EOL;
-		//$class_name = "Schunter_code_ref_$class";
-		//$ref_obj = new $class_name( $id );
-		
 		$property_name = "${class}_refs";
-		echo "Property: $property_name!" . PHP_EOL;
+		echo "Adding {$this->code} $id $class $property_name" . PHP_EOL;
 		$referenced = bw_array_get( $this->{$property_name}, $id, null );
 		if ( !$referenced ) {
 			$this->{$property_name}[ $id ] = $id;
