@@ -13,14 +13,26 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Short code hunter.
 
 1. Searches for shortcodes in your WordPress website
+
+Planned features
+
 1. Allows selection of shortcodes to be registered
 1. Helps keep track of all known shortcodes 
 
 == Installation ==
 1. Upload the contents of the schunter plugin to the `/wp-content/plugins/schunter' directory
 1. Activate the schunter plugin through the 'Plugins' menu in WordPress
+1. Use oik-batch to run the schunter logic
 
 == Frequently Asked Questions ==
+
+= What are the plugin dependencies? =
+
+schunter v0.0.1 is dependent upon oik or oik-lib
+It's designed to be run in batch mode using oik-batch
+which is something like WP-CLI.
+These plugins are available from github.
+
 
 == Screenshots ==
 1. schunter in action
@@ -31,7 +43,7 @@ New plugin, available from github.
 
 == Changelog == 
 = 0.0.1 =
-* Added: New plugin
+* Added: New plugin. Dependent upon oik / oik-lib. Scans for shortcodes in posts.
 
 == Further reading ==
 If you want to read more about the oik plugins then please visit the
