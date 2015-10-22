@@ -4,7 +4,7 @@
 Plugin Name: schunter
 Plugin URI: http://www.oik-plugins.com/oik-plugins/schunter
 Description: short code hunter
-Version: 0.0.1
+Version: 0.0.2
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2

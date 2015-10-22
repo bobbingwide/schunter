@@ -4,7 +4,7 @@ Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: shortcodes, smart, lazy
 Requires at least: 4.3
 Tested up to: 4.3.1
-Stable tag: trunk
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,10 +38,19 @@ These plugins are available from github.
 1. schunter in action
 
 == Upgrade Notice ==
+= 0.0.2 = 
+Now supports scanning of posts, postmeta and options, including serialized data
+
 = 0.0.1=
 New plugin, available from github.
 
 == Changelog == 
+= 0.0.2 =
+* Added: Fixes #1 - schunter should cater for script and CDATA sections
+* Added: Fixes #2 - schunter should cater for style tags
+* Added: Fixes #3 - schunter should cater for shortcodes which don't expand $content
+* Added: Fixes #4 - schunter should cater for postmeta and options, including serialized data
+
 = 0.0.1 =
 * Added: New plugin. Dependent upon oik / oik-lib. Scans for shortcodes in posts.
 
