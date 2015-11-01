@@ -73,6 +73,7 @@ class Schunter_codes {
 	function fetch() {
 		$codes = get_option( "schunter_codes" );
 		//print_r( $codes );
+		$this->codes = $codes;
 	}
 
 	function update() {

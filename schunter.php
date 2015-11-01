@@ -7,7 +7,10 @@ Description: short code hunter
 Version: 0.0.2
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
-License: GPL2
+Text Domain: schunter
+Domain Path: /languages/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
     Copyright 2015 Bobbing Wide (email : herb@bobbingwide.com )
 
@@ -27,7 +30,6 @@ License: GPL2
 
 */
 
-
 /**
  * Process schunter depending on how invoked
  *
@@ -45,25 +47,16 @@ License: GPL2
  * - It has not been tested without the oik base plugin being active
  */
 function schunter_loaded() {
-
 	if ( PHP_SAPI == "cli" ) {
 		if ( $_SERVER['argv'][0] == "boot-fs.php" )   {
 			// This is WP-CLI
 		} else {
-			echo PHP_SAPI;
-			echo PHP_EOL;
-			$included_files = get_included_files();
-			// print_r( $included_files[0] );
-			if ( $included_files[0] == __FILE__) {
+			//oik_require_lib( "oik-cli" );
+			oik_batch_load_cli_functions();
+			if ( oik_batch_run_me( __FILE__ ) ) {
 				schunter_run();
-			} else {
-				//  has been loaded by another PHP routine so that routine is in charge. e.g. boot-fs.php for WP-CLI
-				$basename = basename( $included_files[0] );
-				if ( $basename == "oik-wp.php" ) {
-					schunter_run();
-				}
-			}	
-			echo "End cli:" . __FUNCTION__ . PHP_EOL; 
+				echo "End cli:" . __FUNCTION__ . PHP_EOL; 
+			}
 		}
 	} else {
 		//echo PHP_SAPI;
@@ -74,7 +67,8 @@ function schunter_loaded() {
 		if ( function_exists( "add_action" ) ) {
 			// if ( bw_is_wordpress() ) {
 			//add_action( "admin_notices", "oik_batch_activation" );
-			//add_action( "oik_admin_menu", "oik_batch_admin_menu" );
+			add_action( "admin_menu", "schunter_admin_menu" );
+			add_filter( 'set-screen-option', "schunter_set_screen_option", 10, 3 );
 		}
 	}
 }
@@ -102,6 +96,33 @@ function schunter() {
 		die();
 	}
 	return( $schunter );
+}
+
+function schunter_admin_menu() {
+
+	//	if ( is_admin() ) {   
+			oik_require( "admin/schunter.php", "schunter" );
+			schunter_admin();
+	//	}
+	
+}
+
+
+/**
+ * Implement "set-screen-option" for schunter
+ * 
+ * Do we need to check the option name?
+ */
+function schunter_set_screen_option( $setit, $option, $value ) {
+  $isay = $setit;
+  //bw_trace2();
+  if ( $option == 'codes_per_page' ) {
+    $isay = $value;
+  } else {
+    bw_backtrace();
+    //gobang();
+  }
+  return( $isay );
 }
 
 schunter_loaded();
