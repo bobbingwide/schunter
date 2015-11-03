@@ -107,20 +107,26 @@ function schunter_admin_menu() {
 	
 }
 
-
 /**
  * Implement "set-screen-option" for schunter
  * 
- * Do we need to check the option name?
+ * Note: set-screen-option is called before 'admin_init'
+ * so this filter has to be added early on, but probably only when WP_ADMIN is true.
+ *
+ * @param bool $setit originally false 
+ * @param string $option option name to set
+ * @param string $value value to be set
+ * @return $value if the option is to be set, false otherwise  
  */
 function schunter_set_screen_option( $setit, $option, $value ) {
   $isay = $setit;
-  //bw_trace2();
   if ( $option == 'codes_per_page' ) {
-    $isay = $value;
+		$value = (int) $value;
+    if ( $value > 0 && $value <= 999 ) {
+			$isay = $value;
+		}
   } else {
     bw_backtrace();
-    //gobang();
   }
   return( $isay );
 }
