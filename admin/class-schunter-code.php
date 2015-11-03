@@ -103,6 +103,48 @@ class Schunter_code {
 		echo $this->total_references;
 		echo PHP_EOL;
 	}
+	
+	/**
+	 * Populate the code field
+	 * 
+	 * 
+	 */
+	function code() {
+		if ( !$this->code ) {
+			$this->code = " - blank code";
+		}
+	}
+	
+	/**
+	 * Populate the status field
+	 *
+	 * Since this is an orderable field we need to ensure it's not null
+	 * Therefore we have to set a value when this is invoked
+	 * 
+	 Table copied from above
+	 *
+	 * Shortcode status can be one of the following
+	 *
+	 * Status | Meaning
+	 * ------ | ----------
+	 * Active | Registered by add_shortcode() with an implementing function
+	 * Inactive | Registered by add_shortcode() to produce no output - __return_null() 
+	 * 
+	 * Unknown | Not known as a valid shortcode
+	 * Known | Known to be a valid shortcode
+	 * 
+	 * Invalid | Appears to be a shortcode but has an invalid name
+	 * False | Wasn't a shortcode after all
+	 */
+	
+	function status() {
+		if ( shortcode_exists( $this->code ) ) {
+			$this->status = "Active";
+		} else { 
+			$this->status = "Unknown";
+		}
+		
+	}
 
 
 } 
