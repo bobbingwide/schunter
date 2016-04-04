@@ -68,6 +68,7 @@ class Schunter_List_Table extends BW_List_Table {
 		$columns = array();
 		$columns['cb'] = '<input type="checkbox" />';
 		$columns['code'] = __( "Code", "schunter" ); 
+		$columns['help'] = __( "Help", "schunter" );
 		$columns['status'] = __( "Status", "schunter" );
 		$columns['function'] = __( 'Function', 'schunter' );
 		$columns['total_references'] = __( 'References', 'schunter' );
@@ -83,6 +84,7 @@ class Schunter_List_Table extends BW_List_Table {
 		$sortable_columns = array();
 		$sortable_columns['code'] = array( "code", false );
 		$sortable_columns['status'] = array( "status", false );
+		$sortable_columns['help'] = array( "help", false );
 		$sortable_columns['total_references'] = array( "total_references", false );
 		bw_trace2();
 		return( $sortable_columns );
@@ -274,6 +276,7 @@ class Schunter_List_Table extends BW_List_Table {
 			bw_trace2( $item, "item", false );
 			bw_trace2( $code, "code", false );
 			$code->status();
+			$code->help();
 			
 		}
 	} 

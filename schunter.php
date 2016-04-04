@@ -54,7 +54,7 @@ function schunter_loaded() {
 			//oik_require_lib( "oik-cli" );
 			oik_batch_load_cli_functions();
 			if ( oik_batch_run_me( __FILE__ ) ) {
-				schunter_run();
+				//schunter_run();
 				echo "End cli:" . __FUNCTION__ . PHP_EOL; 
 			}
 		}
@@ -64,12 +64,13 @@ function schunter_loaded() {
 		if ( function_exists( "bw_trace2" ) ) {
 			bw_trace2( PHP_SAPI, "schunter loaded in WordPress environment?" );
 		}
-		if ( function_exists( "add_action" ) ) {
-			// if ( bw_is_wordpress() ) {
-			//add_action( "admin_notices", "oik_batch_activation" );
-			add_action( "admin_menu", "schunter_admin_menu" );
-			add_filter( 'set-screen-option', "schunter_set_screen_option", 10, 3 );
-		}
+	}
+	if ( function_exists( "add_action" ) ) {
+		// if ( bw_is_wordpress() ) {
+		//add_action( "admin_notices", "oik_batch_activation" );
+		add_action( "admin_menu", "schunter_admin_menu" );
+		add_filter( 'set-screen-option', "schunter_set_screen_option", 10, 3 );
+		add_action( "run_schunter.php", "schunter_run" );
 	}
 }
 

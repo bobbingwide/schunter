@@ -49,6 +49,8 @@ class Schunter_code {
 	 */
 	public $status = null;
 	
+	public $help = null;
+	
 	/**
 	 * Total number of references to this shortcode
 	 *
@@ -136,7 +138,6 @@ class Schunter_code {
 	 * Invalid | Appears to be a shortcode but has an invalid name
 	 * False | Wasn't a shortcode after all
 	 */
-	
 	function status() {
 		if ( shortcode_exists( $this->code ) ) {
 			$this->status = "Active";
@@ -144,6 +145,16 @@ class Schunter_code {
 			$this->status = "Unknown";
 		}
 		
+	}
+	
+	/**
+	 * Load the help for the shortcode
+	 *
+	 * @TODO - Only load oik_sc-help.inc once
+	 */
+	function help() {
+		oik_require( "includes/oik-sc-help.inc" );
+		$this->help = _bw_lazy_sc_help( $this->code );
 	}
 
 

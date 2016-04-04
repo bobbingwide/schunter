@@ -100,11 +100,20 @@ class Schunter {
 		echo "Schunting for shortcodes" . PHP_EOL;
 		$this->codes->fetch();
 		$this->options->fetch();
-		$this->schunt_posts();
+		$todo = $this->schunt_posts();
 		
 		//$this->schunt_comments();
 		//$this->schunt_links();
-		$this->schunt_options();
+		
+		// @TODO Need logic to decide when to schunt_options
+		// When ALL posts done?
+		if ( !$todo ) {
+		//
+			//$this->schunt_options();
+		} else {
+			echo "TODO after: $todo " .  PHP_EOL;
+		}
+		echo "pre end_process $todo" . PHP_EOL;
 		//$this->schunt_terms();
 		//$this->schunt_users();
 		
@@ -141,6 +150,8 @@ class Schunter {
 					);
 				
 		$posts = 	bw_get_posts( $args );
+		$todo = count( $posts );
+		echo "Processing posts: $todo" . PHP_EOL;
 		
 		while ( count( $posts ) > 0 ) {							 
 			foreach ( $posts as $post ) {
@@ -154,6 +165,7 @@ class Schunter {
 			unset( $posts );
 			$posts = bw_get_posts( $args );
 		}
+		return( $todo );
 		
 	
 	}
